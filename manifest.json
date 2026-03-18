@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "自定义主页",
+  "version": "1.0",
+  "description": "带必应搜索、壁纸更换和自定义标签的主页",
+  "icons": {
+    "128": "icon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["storage"],
+  "action": {
+    "default_icon": "icon.png"
+  }
+}

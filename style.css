@@ -1,0 +1,214 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 壁纸样式 - 默认纯色（无在线图片） */
+.wallpaper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #091629; /* 默认浅灰色背景 */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.95);
+  z-index: -1;
+  transition: background-image 0.5s ease;
+}
+
+/* 主容器 */
+.container {
+  text-align: center;
+  margin-top: 100px;
+  z-index: 1;
+}
+
+/* 搜索整体ui */
+.search-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: row; /* 改为纵向排列 */
+  gap: 0.8rem;
+  max-width: 1000px;
+  width: 95%;
+}
+
+/* 搜索框 */
+#searchInput {
+  width: 500px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: none; /* 去除默认边框 */
+  outline: none; /* 去除选中时的轮廓 */
+  padding: 15px 20px;
+}
+
+/* 输入框空白时的文字提示 */
+
+
+/* 搜索按钮 */
+#searchBtn {
+  padding: 8px 48px;
+  border: none;
+  border-radius: 24px;
+  background: #2974c5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap; /* 确保文字横排不换行 */
+}
+
+
+#searchBtn:hover {
+  background: #0056b3;
+}
+
+/* 标签容器 */
+.tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1000px;
+  max-height: 500px;
+  overflow-y: auto;
+  gap: 10px;
+  padding: 5px;
+  margin: 20px auto;
+}
+
+.tabs-container::-webkit-scrollbar {
+  width: 6px;
+}
+.tabs-container::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.biaoqian {
+  font-size: 12px;
+}
+
+.tab {
+  flex: 0 0 auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  font-size: 18px;
+  color: #ffffff;
+  /* 统一间距，确保所有元素对齐 */
+  margin: 18px;
+}
+
+
+.tab:hover {
+  transform: scale(1.1);
+  border-color: rgba(44, 41, 41, 0.9);
+  color: orange;
+}
+
+#tabsList {
+  display: flex;
+  flex-wrap: wrap;
+  /* 移除默认间距，避免与按钮错位 */
+  margin: 0;
+  padding: 0;
+}
+
+#addTabBtn {
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 64px;
+  /* 固定定位到右下角 */
+  position: fixed;
+  bottom: 90px; /* 位于更换壁纸按钮上方（距离底部90px，留出壁纸按钮的空间） */
+  right: 30px;
+  /* 移除原有的margin，避免位置偏移 */
+  margin: 0;
+  /* 确保在其他元素上方 */
+  z-index: 2;
+}
+
+/* 壁纸更换按钮 */
+#changeWallpaperBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  margin: 0; /* 清除原有margin */
+  padding: 10px 5px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+#tabName, #tabUrl {
+  background-color: rgba(0,0,0,0.1);
+} 
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-content input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+
+.modal-content button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#confirmAddTab {
+  background: #28a745;
+  color: white;
+}
+
+#closeModal {
+  background: #dc3545;
+  color: white;
+}

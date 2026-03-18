@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新标签页</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 壁纸容器 -->
+  <div class="wallpaper"></div>
+  
+  <!-- 主内容区 -->
+  <div class="container">
+    <!-- 搜索框 -->
+    <div class="search-box">
+      <div style="position: relative;">
+        <div id="searchTip" style="position: absolute; bottom: calc(100% + 4px); left: 12%; transform: translateX(-50%); color: #ef4444; font-size: 14px; opacity: 0; transition: opacity 0.3s;"></div>
+        <input type="text" id="searchInput" placeholder="必应搜索...">
+      </div>
+      <button id="searchBtn">搜索</button>
+    </div>
+
+
+    
+    <!-- 标签容器 -->
+    <div class="tabs-container">
+      <div class="tab" id="addTabBtn"><div>+</div><div class="biaoqian">自定义标签</div></div>
+      <div id="tabsList"></div>
+    </div>
+    
+    <!-- 壁纸更换按钮 -->
+    <button id="changeWallpaperBtn">更换壁纸（本地）</button>
+    <!-- 隐藏的文件选择器（用于选择本地图片） -->
+    <input type="file" id="wallpaperFile" accept="image/*" style="display: none;">
+  </div>
+  
+  <!-- 添加标签弹窗 -->
+  <div class="modal" id="addTabModal">
+    <div class="modal-content">
+      <h3>添加自定义标签</h3>
+      <input type="text" id="tabName" placeholder="标签名称">
+      <input type="url" id="tabUrl" placeholder="网页链接（http://开头）">
+      <button id="confirmAddTab">确认添加</button>
+      <button id="closeModal">取消</button>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
