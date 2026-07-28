@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
@@ -14,201 +14,538 @@ body {
   overflow: hidden;
 }
 
-/* 壁纸样式 - 默认纯色（无在线图片） */
+/* ===== 壁纸容器 ===== */
 .wallpaper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #091629; /* 默认浅灰色背景 */
+  z-index: -1;
+  overflow: hidden;
+  background-color: #091629;
+}
+.wallpaper-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
-  filter: brightness(0.95);
-  z-index: -1;
-  transition: background-image 0.5s ease;
+  filter: brightness(0.92);
+  transition: opacity 0.6s ease;
+  opacity: 0;
+}
+.wallpaper-image.active {
+  opacity: 1;
+}
+.wallpaper-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.92);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.wallpaper-video.active {
+  opacity: 1;
 }
 
-/* 主容器 */
+/* ===== 主容器 ===== */
 .container {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 80px;
   z-index: 1;
-}
-
-/* 搜索整体ui */
-.search-box {
-  display: flex;
-  justify-content: center;
-  flex-direction: row; /* 改为纵向排列 */
-  gap: 0.8rem;
-  max-width: 1000px;
-  width: 95%;
-}
-
-/* 搜索框 */
-#searchInput {
-  width: 500px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  border: none; /* 去除默认边框 */
-  outline: none; /* 去除选中时的轮廓 */
-  padding: 15px 20px;
-}
-
-/* 输入框空白时的文字提示 */
-
-
-/* 搜索按钮 */
-#searchBtn {
-  padding: 8px 48px;
-  border: none;
-  border-radius: 24px;
-  background: #2974c5;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s;
-  white-space: nowrap; /* 确保文字横排不换行 */
-}
-
-
-#searchBtn:hover {
-  background: #0056b3;
-}
-
-/* 标签容器 */
-.tabs-container {
-  display: flex;
-  flex-wrap: wrap;
-  width: 1000px;
-  max-height: 500px;
-  overflow-y: auto;
-  gap: 10px;
-  padding: 5px;
-  margin: 20px auto;
-}
-
-.tabs-container::-webkit-scrollbar {
-  width: 6px;
-}
-.tabs-container::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
-  border-radius: 3px;
-}
-
-.biaoqian {
-  font-size: 12px;
-}
-
-.tab {
-  flex: 0 0 auto;
-  width: 100px;
-  height: 100px;
-  border-radius: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* ===== 搜索框 ===== */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  max-width: 480px;
+  width: 80%;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  border-radius: 48px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  padding: 4px 4px 4px 18px;
+  transition: box-shadow 0.3s;
+  position: relative;
+  transform: scale(0.8);
+  transform-origin: center center;
+  margin: 0 auto;
+}
+.search-box:focus-within {
+  box-shadow: 0 8px 30px rgba(0, 80, 200, 0.20);
+  transform: scale(0.8);
+}
+.search-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.search-icon svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+#searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 14px 0;
+  font-size: 16px;
+  color: #1e293b;
+  min-width: 0;
+}
+#searchInput::placeholder {
+  color: rgba(30, 41, 59, 0.7);
+  font-weight: 400;
+}
+#searchBtn {
+  flex-shrink: 0;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 40px;
+  background: rgba(41, 116, 197, 0.85);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-  font-size: 18px;
-  color: #ffffff;
-  /* 统一间距，确保所有元素对齐 */
-  margin: 18px;
+  transition: background 0.25s, transform 0.15s;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+}
+#searchBtn:hover {
+  background: rgba(26, 92, 168, 0.95);
+  transform: scale(1.02);
+}
+#searchTip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.70);
+  padding: 4px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
 }
 
-
-.tab:hover {
-  transform: scale(1.1);
-  border-color: rgba(44, 41, 41, 0.9);
-  color: orange;
+/* ===== 标签容器 ===== */
+.tabs-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 16px auto 0;
+  padding: 20px 10px 10px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+.tabs-container::-webkit-scrollbar {
+  width: 4px;
+}
+.tabs-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
 }
 
+/* ===== 标签列表 ===== */
 #tabsList {
   display: flex;
   flex-wrap: wrap;
-  /* 移除默认间距，避免与按钮错位 */
-  margin: 0;
-  padding: 0;
+  justify-content: flex-start;
+  gap: 16px;
 }
 
-#addTabBtn {
-  background: rgba(255, 255, 255, 0.3);
-  font-size: 64px;
-  /* 固定定位到右下角 */
+/* ===== 标签格子 ===== */
+.tab {
+  flex: 0 0 100px;
+  width: 100px;
+  height: 110px;
+  border-radius: 18px;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: #fff;
+  padding: 8px 4px;
+  box-shadow: none;
+}
+.tab:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+.tab-favicon {
+  width: 66px;
+  height: 66px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+  overflow: hidden;
+  position: relative;
+}
+.tab-favicon img {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  display: block;
+}
+.tab-favicon .fallback-icon {
+  font-size: 28px;
+  line-height: 1;
+  color: #ffffffdd;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tab-name {
+  font-size: 9.6px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.30);
+}
+
+/* ===== 右上角设置按钮 + 下拉菜单 ===== */
+.settings-wrapper {
   position: fixed;
-  bottom: 90px; /* 位于更换壁纸按钮上方（距离底部90px，留出壁纸按钮的空间） */
-  right: 30px;
-  /* 移除原有的margin，避免位置偏移 */
-  margin: 0;
-  /* 确保在其他元素上方 */
-  z-index: 2;
+  top: 24px;
+  right: 24px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-/* 壁纸更换按钮 */
-#changeWallpaperBtn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  margin: 0; /* 清除原有margin */
-  padding: 10px 5px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.6);
+.settings-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(12px);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+.settings-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+.settings-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
 }
 
-#tabName, #tabUrl {
-  background-color: rgba(0,0,0,0.1);
-} 
+.settings-dropdown {
+  margin-top: 8px;
+  background: rgba(30, 35, 48, 0.96);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.50);
+  padding: 6px 0;
+  min-width: 160px;
+  display: none;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  animation: dropdownFade 0.15s ease-out;
+}
+.settings-wrapper:hover .settings-dropdown {
+  display: flex;
+}
 
-/* 弹窗样式 */
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dropdown-item {
+  background: transparent;
+  border: none;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #f1f5f9;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+.dropdown-item:active {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== 弹窗 ===== */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 20;
 }
-
+.modal.open {
+  display: flex;
+}
 .modal-content {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
+  background: #1e293b;
+  padding: 32px 28px 28px;
+  border-radius: 24px;
   width: 90%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.50);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
-
+.modal-content h3 {
+  color: #f1f5f9;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
 .modal-content input {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f1f5f9;
+  font-size: 15px;
   outline: none;
 }
-
+.modal-content input:focus {
+  border-color: #2974c5;
+}
 .modal-content button {
-  padding: 10px;
+  padding: 12px 0;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  transition: transform 0.15s;
 }
-
 #confirmAddTab {
-  background: #28a745;
-  color: white;
+  background: #2974c5;
+  color: #fff;
+}
+#closeModal {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+#closeModal:hover {
+  background: rgba(255, 255, 255, 0.16);
 }
 
-#closeModal {
-  background: #dc3545;
-  color: white;
+/* ===== 右键菜单 ===== */
+.custom-context-menu {
+  position: fixed;
+  z-index: 10000;
+  background: rgba(30, 35, 48, 0.96);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.50);
+  min-width: 170px;
+  overflow: hidden;
+  animation: menuFadeIn 0.12s ease-out;
+}
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+.menu-item {
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f1f5f9;
+  cursor: pointer;
+  transition: all 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-left: 3px solid transparent;
+}
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-left-color: #f97316;
+}
+.menu-item.selected {
+  background: rgba(249, 115, 22, 0.20);
+  border-left-color: #f97316;
+}
+.menu-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 4px 12px;
+}
+
+/* ===== 图标设置行样式 ===== */
+.icon-setting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 8px 12px 8px 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.icon-preview-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 2px dashed rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+.icon-preview-btn:hover {
+  border-color: rgba(255,255,255,0.4);
+}
+.icon-preview-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.icon-preview-btn .icon-placeholder {
+  color: #64748b;
+  font-size: 28px;
+}
+.icon-row-name {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  color: #f1f5f9;
+  font-size: 14px;
+  outline: none;
+  min-width: 0;
+}
+.icon-row-name:focus {
+  border-color: #2974c5;
+}
+.icon-row-delete {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(239,68,68,0.15);
+  color: #f87171;
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-row-delete:hover {
+  background: rgba(239,68,68,0.30);
+}
+
+/* ===== 滚动条美化 ===== */
+#iconSettingList::-webkit-scrollbar {
+  width: 4px;
+}
+#iconSettingList::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.08);
+  border-radius: 4px;
+}
+#iconSettingList::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 640px) {
+  .container { margin-top: 50px; }
+  .search-box {
+    max-width: 380px;
+    padding: 3px 3px 3px 14px;
+    transform: scale(0.8);
+  }
+  .search-box:focus-within {
+    transform: scale(0.8);
+  }
+  #searchInput { font-size: 14px; padding: 12px 0; }
+  #searchBtn { padding: 8px 18px; font-size: 13px; }
+  .search-icon { width: 22px; height: 22px; margin-right: 6px; }
+  .search-icon svg { width: 22px; height: 22px; }
+  .tab { flex: 0 0 80px; width: 80px; height: 92px; border-radius: 14px; }
+  .tab-favicon { width: 66px; height: 66px; }
+  .tab-favicon img { width: 65px; height: 65px; }
+  .tab-name { font-size: 9.6px; max-width: 72px; }
+  #addTabBtn { width: 52px; height: 52px; font-size: 28px; bottom: 20px; right: 16px; }
+  .settings-wrapper { top: 16px; right: 16px; }
+  .settings-btn { width: 38px; height: 38px; }
+  .settings-btn svg { width: 20px; height: 20px; }
+  .settings-dropdown { min-width: 140px; }
+  .dropdown-item { font-size: 12px; padding: 8px 14px; }
+  .icon-preview-btn { width: 44px; height: 44px; }
+  .icon-row-name { font-size: 12px; padding: 8px 10px; }
+  .icon-row-delete { width: 30px; height: 30px; font-size: 16px; }
+}
+@media (max-width: 400px) {
+  .tab { flex: 0 0 68px; width: 68px; height: 80px; }
+  .tab-favicon { width: 66px; height: 66px; }
+  .tab-favicon img { width: 65px; height: 65px; }
+  .tab-name { font-size: 9.6px; max-width: 62px; }
+  .search-box { max-width: 300px; }
 }
