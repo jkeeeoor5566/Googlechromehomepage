@@ -34,11 +34,17 @@
 
 ## 📁 项目结构
 ├── manifest.json # 扩展清单（Chrome Manifest V3）
+
 ├── index.html # 主页面 HTML 结构
+
 ├── style.css # 全局样式与动画
+
 ├── script.js # 核心交互逻辑（搜索、壁纸、标签、导入导出）
+
 ├── icon/ # （可选）存放标签默认图标，命名需与标签名称一致
+
 │ └── example.png
+
 └── README.md # 项目说明文档
 
 ## 🖱️ 使用说明
